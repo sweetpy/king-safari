@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics | King Safari</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2732%27%20height%3D%2732%27%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%2523EA580C%27/%3E%3C/svg%3E">
+    <style>
+        body { font-family: 'Outfit', sans-serif; }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="dashboard.html" class="text-orange-600 hover:text-orange-700 font-medium">← Back to Dashboard</a>
+                <span class="font-semibold text-lg">Reports & Analytics</span>
+            </div>
+            <a href="login.html" id="logoutBtn" class="text-orange-600 hover:text-orange-700 font-medium">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Summary Cards -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Total Visits</p>
+                        <p class="text-2xl font-bold text-blue-600" id="totalVisits">1,234</p>
+                        <p class="text-sm text-green-600">↗ +12% from last month</p>
+                    </div>
+                    <div class="text-3xl">👥</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Total Bookings</p>
+                        <p class="text-2xl font-bold text-green-600" id="totalBookings">567</p>
+                        <p class="text-sm text-green-600">↗ +8% from last month</p>
+                    </div>
+                    <div class="text-3xl">📅</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Conversion Rate</p>
+                        <p class="text-2xl font-bold text-orange-600" id="conversionRate">46%</p>
+                        <p class="text-sm text-green-600">↗ +3% from last month</p>
+                    </div>
+                    <div class="text-3xl">📈</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Revenue</p>
+                        <p class="text-2xl font-bold text-purple-600" id="totalRevenue">$45,678</p>
+                        <p class="text-sm text-green-600">↗ +15% from last month</p>
+                    </div>
+                    <div class="text-3xl">💰</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid gap-8 lg:grid-cols-2 mb-8">
+            <!-- Bookings Chart -->
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <h3 class="text-lg font-bold mb-4">Monthly Bookings</h3>
+                <div class="chart-container">
+                    <canvas id="bookingsChart" class="w-full h-full"></canvas>
+                </div>
+            </div>
+
+            <!-- Revenue Chart -->
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <h3 class="text-lg font-bold mb-4">Revenue Trend</h3>
+                <div class="chart-container">
+                    <canvas id="revenueChart" class="w-full h-full"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle Performance -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 fade-in">
+            <h3 class="text-lg font-bold mb-6">Vehicle Performance</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left py-3 px-4">Vehicle</th>
+                            <th class="text-left py-3 px-4">Bookings</th>
+                            <th class="text-left py-3 px-4">Revenue</th>
+                            <th class="text-left py-3 px-4">Utilization</th>
+                            <th class="text-left py-3 px-4">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                                        <span class="text-sm">🚗</span>
+                                    </div>
+                                    <span class="font-medium">Toyota Alphard</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">156</td>
+                            <td class="py-3 px-4">$18,450</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                    <span class="text-sm">85%</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="text-yellow-500">⭐ 4.9</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                        <span class="text-sm">🚙</span>
+                                    </div>
+                                    <span class="font-medium">Land Cruiser</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">203</td>
+                            <td class="py-3 px-4">$15,670</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                                    </div>
+                                    <span class="text-sm">92%</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="text-yellow-500">⭐ 4.8</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <span class="text-sm">🚌</span>
+                                    </div>
+                                    <span class="font-medium">Coaster Minibus</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">89</td>
+                            <td class="py-3 px-4">$11,560</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-16 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 67%"></div>
+                                    </div>
+                                    <span class="text-sm">67%</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="text-yellow-500">⭐ 4.7</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Popular Routes -->
+        <div class="grid gap-8 lg:grid-cols-2 mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <h3 class="text-lg font-bold mb-6">Popular Routes</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <p class="font-medium">Kilimanjaro Airport → Arusha</p>
+                            <p class="text-sm text-gray-600">Airport Transfer</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">127</p>
+                            <p class="text-sm text-gray-600">bookings</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <p class="font-medium">Arusha → Serengeti</p>
+                            <p class="text-sm text-gray-600">Safari Tour</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">98</p>
+                            <p class="text-sm text-gray-600">bookings</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <p class="font-medium">Moshi → Kilimanjaro Base</p>
+                            <p class="text-sm text-gray-600">Mountain Tour</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">76</p>
+                            <p class="text-sm text-gray-600">bookings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+                <h3 class="text-lg font-bold mb-6">Customer Feedback</h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-600">Sarah J.</span>
+                        </div>
+                        <p class="text-sm">"Excellent service! The Alphard was luxurious and the driver was very professional."</p>
+                    </div>
+                    <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-600">Michael C.</span>
+                        </div>
+                        <p class="text-sm">"Perfect safari experience with the Land Cruiser. Highly recommended!"</p>
+                    </div>
+                    <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="text-yellow-500">⭐⭐⭐⭐</span>
+                            <span class="text-sm text-gray-600">Emma R.</span>
+                        </div>
+                        <p class="text-sm">"Great group transport service. The minibus was comfortable for our family."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Options -->
+        <div class="bg-white rounded-lg shadow-lg p-6 fade-in">
+            <h3 class="text-lg font-bold mb-4">Export Reports</h3>
+            <div class="flex flex-wrap gap-4">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                    📊 Export to Excel
+                </button>
+                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                    📄 Export to PDF
+                </button>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                    📈 Generate Custom Report
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('staffLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('staffLoggedIn');
+                localStorage.removeItem('staffUsername');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Simple chart implementation (using Canvas API)
+        function drawChart(canvasId, data, color) {
+            const canvas = document.getElementById(can vasId);
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width = canvas.offsetWidth;
+            const height = canvas.height = canvas.offsetHeight;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Chart settings
+            const padding = 40;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+            const maxValue = Math.max(...data);
+            const barWidth = chartWidth / data.length;
+
+            // Draw bars
+            data.forEach((value, index) => {
+                const barHeight = (value / maxValue) * chartHeight;
+                const x = padding + index * barWidth + barWidth * 0.1;
+                const y = height - padding - barHeight;
+                const barActualWidth = barWidth * 0.8;
+
+                // Draw bar
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, barActualWidth, barHeight);
+
+                // Draw value label
+                ctx.fillStyle = '#374151';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(value, x + barActualWidth / 2, y - 5);
+
+                // Draw month label
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                ctx.fillText(months[index] || `M${index + 1}`, x + barActualWidth / 2, height - padding + 20);
+            });
+        }
+
+        // Initialize charts
+        setTimeout(() => {
+            drawChart('bookingsChart', [45, 52, 48, 61, 55, 67], '#EA580C');
+            drawChart('revenueChart', [3200, 3800, 3500, 4200, 3900, 4500], '#10B981');
+        }, 100);
+
+        // Simulate real-time data updates
+        function updateStats() {
+            const stats = {
+                totalVisits: Math.floor(Math.random() * 100) + 1200,
+                totalBookings: Math.floor(Math.random() * 50) + 550,
+                conversionRate: Math.floor(Math.random() * 10) + 40,
+                totalRevenue: '$' + (Math.floor(Math.random() * 5000) + 43000).toLocaleString()
+            };
+
+            Object.keys(stats).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = stats[key];
+                }
+            });
+        }
+
+        // Update stats every 30 seconds
+        setInterval(updateStats, 30000);
+
+        // Add fade-in animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

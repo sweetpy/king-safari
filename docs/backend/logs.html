@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Logs | King Safari</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2732%27%20height%3D%2732%27%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%2523EA580C%27/%3E%3C/svg%3E">
+    <style>
+        body { font-family: 'Outfit', sans-serif; }
+        .log-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .log-info { color: #3B82F6; }
+        .log-warning { color: #F59E0B; }
+        .log-error { color: #EF4444; }
+        .log-success { color: #10B981; }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="dashboard.html" class="text-orange-600 hover:text-orange-700 font-medium">← Back to Dashboard</a>
+                <span class="font-semibold text-lg">System Logs</span>
+            </div>
+            <a href="login.html" id="logoutBtn" class="text-orange-600 hover:text-orange-700 font-medium">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Controls -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6 fade-in">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <select id="logLevel" class="border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="all">All Levels</option>
+                        <option value="info">Info</option>
+                        <option value="warning">Warning</option>
+                        <option value="error">Error</option>
+                        <option value="success">Success</option>
+                    </select>
+                    
+                    <select id="timeRange" class="border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="all">All Time</option>
+                    </select>
+                    
+                    <input type="text" id="searchLogs" placeholder="Search logs..." class="border border-gray-300 rounded-lg px-3 py-2 w-64">
+                </div>
+                
+                <div class="flex gap-2">
+                    <button id="refreshLogs" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        🔄 Refresh
+                    </button>
+                    <button id="clearLogs" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        🗑️ Clear
+                    </button>
+                    <button id="downloadLogs" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        📥 Download
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Statistics -->
+        <div class="grid gap-4 md:grid-cols-4 mb-6">
+            <div class="bg-white rounded-lg shadow p-4 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600">Total Entries</p>
+                        <p class="text-xl font-bold" id="totalEntries">1,247</p>
+                    </div>
+                    <div class="text-2xl">📊</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600">Errors</p>
+                        <p class="text-xl font-bold text-red-600" id="errorCount">3</p>
+                    </div>
+                    <div class="text-2xl">❌</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600">Warnings</p>
+                        <p class="text-xl font-bold text-yellow-600" id="warningCount">12</p>
+                    </div>
+                    <div class="text-2xl">⚠️</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4 fade-in">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600">Success</p>
+                        <p class="text-xl font-bold text-green-600" id="successCount">1,232</p>
+                    </div>
+                    <div class="text-2xl">✅</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logs Display -->
+        <div class="bg-white rounded-lg shadow-lg fade-in">
+            <div class="p-4 border-b">
+                <h2 class="text-lg font-bold">System Activity Log</h2>
+                <p class="text-sm text-gray-600">Real-time system events and activities</p>
+            </div>
+            
+            <div class="p-4">
+                <div id="logsContainer" class="bg-black text-green-400 p-4 rounded-lg h-96 overflow-y-auto font-mono text-sm">
+                    <!-- Sample log entries -->
+                    <div class="log-entry log-success mb-1">
+                        [2025-01-27 14:32:15] INFO: Successful login for user 'staff' from IP 192.168.1.100
+                    </div>
+                    <div class="log-entry log-info mb-1">
+                        [2025-01-27 14:31:45] INFO: New booking request received - Toyota Alphard VIP
+                    </div>
+                    <div class="log-entry log-success mb-1">
+                        [2025-01-27 14:30:22] SUCCESS: Asset upload completed - vehicle_photo_001.jpg
+                    </div>
+                    <div class="log-entry log-info mb-1">
+                        [2025-01-27 14:28:33] INFO: Dashboard accessed by user 'staff'
+                    </div>
+                    <div class="log-entry log-warning mb-1">
+                        [2025-01-27 14:25:17] WARNING: High memory usage detected - 85% utilization
+                    </div>
+                    <div class="log-entry log-success mb-1">
+                        [2025-01-27 14:22:08] SUCCESS: Database backup completed successfully
+                    </div>
+                    <div class="log-entry log-info mb-1">
+                        [2025-01-27 14:20:45] INFO: WhatsApp integration status check - OK
+                    </div>
+                    <div class="log-entry log-success mb-1">
+                        [2025-01-27 14:18:12] SUCCESS: Email notification sent to customer
+                    </div>
+                    <div class="log-entry log-info mb-1">
+                        [2025-01-27 14:15:33] INFO: Fleet status updated - 12 vehicles active
+                    </div>
+                    <div class="log-entry log-warning mb-1">
+                        [2025-01-27 14:12:55] WARNING: Vehicle maintenance due - Land Cruiser LC001
+                    </div>
+                    <div class="log-entry log-success mb-1">
+                        [2025-01-27 14:10:21] SUCCESS: Payment processed - Booking #BK2025001
+                    </div>
+                    <div class="log-entry log-info mb-1">
+                        [2025-01-27 14:08:44] INFO: Customer feedback received - Rating: 5 stars
+                    </div>
+                    <div class="log-entry log-error mb-1">
+                        [2025-01-27 14:05:17] ERROR: Failed to send SMS notification - Network timeout
+                    </div>
+                    <div class="log-entry log-success mb-1">
+                        [2025-01-27 14:02:33] SUCCESS: Route optimization completed
+                    </div>
+                    <div class="log-entry log-info mb-1">
+                        [2025-01-27 14:00:00] INFO: System health check - All services operational
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t bg-gray-50">
+                <div class="flex justify-between items-center text-sm text-gray-600">
+                    <span>Showing last 100 entries</span>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="autoRefresh" class="mr-2" checked>
+                            Auto-refresh (30s)
+                        </label>
+                        <span id="lastUpdate">Last updated: Just now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Details Modal -->
+        <div id="logModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg max-w-2xl w-full max-h-full overflow-auto">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h3 class="text-lg font-semibold">Log Entry Details</h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <div class="p-4">
+                    <div id="modalContent" class="space-y-4">
+                        <!-- Modal content will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('staffLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('staffLoggedIn');
+                localStorage.removeItem('staffUsername');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Log management functionality
+        const logsContainer = document.getElementById('logsContainer');
+        const logLevel = document.getElementById('logLevel');
+        const timeRange = document.getElementById('timeRange');
+        const searchLogs = document.getElementById('searchLogs');
+        const refreshLogs = document.getElementById('refreshLogs');
+        const clearLogs = document.getElementById('clearLogs');
+        const downloadLogs = document.getElementById('downloadLogs');
+        const autoRefresh = document.getElementById('autoRefresh');
+        const lastUpdate = document.getElementById('lastUpdate');
+
+        // Sample log data
+        const logTypes = ['INFO', 'SUCCESS', 'WARNING', 'ERROR'];
+        const logMessages = [
+            'User login successful',
+            'Booking request received',
+            'Asset upload completed',
+            'Database backup completed',
+            'Payment processed',
+            'Email notification sent',
+            'System health check',
+            'Fleet status updated',
+            'Customer feedback received',
+            'Route optimization completed',
+            'High memory usage detected',
+            'Vehicle maintenance due',
+            'Network timeout occurred',
+            'Failed to send notification'
+        ];
+
+        // Generate random log entry
+        function generateLogEntry() {
+            const now = new Date();
+            const timestamp = now.toISOString().slice(0, 19).replace('T', ' ');
+            const type = logTypes[Math.floor(Math.random() * logTypes.length)];
+            const message = logMessages[Math.floor(Math.random() * logMessages.length)];
+            
+            const logClass = {
+                'INFO': 'log-info',
+                'SUCCESS': 'log-success',
+                'WARNING': 'log-warning',
+                'ERROR': 'log-error'
+            }[type];
+
+            return {
+                timestamp,
+                type,
+                message,
+                class: logClass,
+                full: `[${timestamp}] ${type}: ${message}`
+            };
+        }
+
+        // Add new log entry
+        function addLogEntry() {
+            const entry = generateLogEntry();
+            const div = document.createElement('div');
+            div.className = `log-entry ${entry.class} mb-1`;
+            div.textContent = entry.full;
+            div.addEventListener('click', () => showLogDetails(entry));
+            
+            logsContainer.insertBefore(div, logsContainer.firstChild);
+            
+            // Keep only last 100 entries
+            const entries = logsContainer.children;
+            if (entries.length > 100) {
+                logsContainer.removeChild(entries[entries.length - 1]);
+            }
+            
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const entries = logsContainer.children;
+            let errorCount = 0;
+            let warningCount = 0;
+            let successCount = 0;
+            
+            Array.from(entries).forEach(entry => {
+                if (entry.classList.contains('log-error')) errorCount++;
+                else if (entry.classList.contains('log-warning')) warningCount++;
+                else if (entry.classList.contains('log-success')) successCount++;
+            });
+            
+            document.getElementById('totalEntries').textContent = entries.length;
+            document.getElementById('errorCount').textContent = errorCount;
+            document.getElementById('warningCount').textContent = warningCount;
+            document.getElementById('successCount').textContent = successCount;
+        }
+
+        // Filter logs
+        function filterLogs() {
+            const level = logLevel.value;
+            const search = searchLogs.value.toLowerCase();
+            const entries = logsContainer.children;
+            
+            Array.from(entries).forEach(entry => {
+                let show = true;
+                
+                // Filter by level
+                if (level !== 'all') {
+                    const hasClass = entry.classList.contains(`log-${level}`);
+                    if (!hasClass) show = false;
+                }
+                
+                // Filter by search
+                if (search && !entry.textContent.toLowerCase().includes(search)) {
+                    show = false;
+                }
+                
+                entry.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        // Show log details in modal
+        function showLogDetails(entry) {
+            const modal = document.getElementById('logModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Timestamp</label>
+                        <p class="text-sm bg-gray-100 p-2 rounded">${entry.timestamp}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Level</label>
+                        <p class="text-sm bg-gray-100 p-2 rounded">${entry.type}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Message</label>
+                        <p class="text-sm bg-gray-100 p-2 rounded">${entry.message}</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Full Entry</label>
+                        <p class="text-sm bg-gray-100 p-2 rounded font-mono">${entry.full}</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        // Event listeners
+        logLevel.addEventListener('change', filterLogs);
+        searchLogs.addEventListener('input', filterLogs);
+
+        refreshLogs.addEventListener('click', () => {
+            addLogEntry();
+            lastUpdate.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+        });
+
+        clearLogs.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all logs?')) {
+                logsContainer.innerHTML = '';
+                updateStats();
+            }
+        });
+
+        downloadLogs.addEventListener('click', () => {
+            const logs = Array.from(logsContainer.children).map(entry => entry.textContent).join('\n');
+            const blob = new Blob([logs], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `king-safari-logs-${new Date().toISOString().slice(0, 10)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        // Modal functionality
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('logModal').classList.add('hidden');
+        });
+
+        document.getElementById('logModal').addEventListener('click', (e) => {
+            if (e.target.id === 'logModal') {
+                document.getElementById('logModal').classList.add('hidden');
+            }
+        });
+
+        // Auto-refresh functionality
+        let refreshInterval;
+        
+        function toggleAutoRefresh() {
+            if (autoRefresh.checked) {
+                refreshInterval = setInterval(() => {
+                    if (Math.random() > 0.7) { // 30% chance of new log entry
+                        addLogEntry();
+                        lastUpdate.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                    }
+                }, 30000);
+            } else {
+                clearInterval(refreshInterval);
+            }
+        }
+
+        autoRefresh.addEventListener('change', toggleAutoRefresh);
+
+        // Initialize
+        updateStats();
+        toggleAutoRefresh();
+
+        // Add click listeners to existing log entries
+        Array.from(logsContainer.children).forEach(entry => {
+            entry.addEventListener('click', () => {
+                const text = entry.textContent;
+                const match = text.match(/\[(.*?)\] (\w+): (.*)/);
+                if (match) {
+                    showLogDetails({
+                        timestamp: match[1],
+                        type: match[2],
+                        message: match[3],
+                        full: text
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

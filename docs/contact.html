@@ -14,44 +14,364 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
     body { font-family: 'Outfit', sans-serif; }
-    .floating-whatsapp { position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; padding: 12px 16px; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 9999; }
+    .floating-whatsapp { 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      background-color: #25D366; 
+      color: white; 
+      padding: 12px 16px; 
+      border-radius: 50%; 
+      font-size: 24px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+      z-index: 9999;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .nav-blur {
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .contact-card {
+      transition: all 0.3s ease;
+    }
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body class="bg-white text-gray-800">
-<nav class="bg-white shadow fixed top-0 inset-x-0 z-50">
+<nav class="nav-blur shadow fixed top-0 inset-x-0 z-50">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-    <a href="index.html" class="text-xl font-semibold">King Safari</a>
-    <div class="space-x-4">
-      <a href="index.html#home" class="hover:text-orange-600">Home</a>
-      <a href="about.html" class="hover:text-orange-600">About</a>
-      <a href="fleet.html" class="hover:text-orange-600">Fleet</a>
-      <a href="gallery.html" class="hover:text-orange-600">Gallery</a>
-      <a href="contact.html" class="hover:text-orange-600">Contact</a>
-      <a href="terms.html" class="hover:text-orange-600">Terms</a>
-      <a href="/login" class="hover:text-orange-600">Staff Login</a>
+    <a href="index.html" class="text-xl font-bold text-orange-600">King Safari</a>
+    <div class="hidden md:flex space-x-6 items-center">
+      <a href="index.html#home" class="hover:text-orange-600 transition-colors">Home</a>
+      <a href="about.html" class="hover:text-orange-600 transition-colors">About</a>
+      <a href="fleet.html" class="hover:text-orange-600 transition-colors">Fleet</a>
+      <a href="gallery.html" class="hover:text-orange-600 transition-colors">Gallery</a>
+      <a href="contact.html" class="text-orange-600 font-semibold">Contact</a>
+      <a href="terms.html" class="hover:text-orange-600 transition-colors">Terms</a>
+      <a href="backend/login" class="hover:text-orange-600 transition-colors">Staff Login</a>
+    </div>
+    <button id="mobileMenuBtn" class="md:hidden">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+    <div class="px-4 py-2 space-y-2">
+      <a href="index.html#home" class="block hover:text-orange-600">Home</a>
+      <a href="about.html" class="block hover:text-orange-600">About</a>
+      <a href="fleet.html" class="block hover:text-orange-600">Fleet</a>
+      <a href="gallery.html" class="block hover:text-orange-600">Gallery</a>
+      <a href="contact.html" class="block text-orange-600 font-semibold">Contact</a>
+      <a href="terms.html" class="block hover:text-orange-600">Terms</a>
+      <a href="backend/login" class="block hover:text-orange-600">Staff Login</a>
     </div>
   </div>
 </nav>
+
 <main class="pt-24 pb-16">
-  <div class="container mx-auto px-4 text-center">
-    <h1 class="text-3xl font-semibold mb-6">Contact Us</h1>
-    <p class="mb-4">Phone: <a href="tel:+255686120646" class="text-orange-600">+255 686 120 646</a></p>
-    <p class="mb-4">Email: <a href="mailto:info@kingsafari.co.tz" class="text-orange-600">info@kingsafari.co.tz</a></p>
-    <p class="mb-4">Locations: Arusha, Moshi, Kilimanjaro &amp; Dar es Salaam</p>
-    <a href="https://wa.me/255686120646" target="_blank" rel="noopener" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded">Chat on WhatsApp</a>
-    <div id="contactMap" class="h-80 mt-6"></div>
-  </div>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 fade-in">Contact Us</h1>
+      <p class="text-xl md:text-2xl mb-8 fade-in">Get in touch for bookings, inquiries, or assistance</p>
+    </div>
+  </section>
+
+  <!-- Contact Information -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-16">
+        <!-- Phone Contact -->
+        <div class="contact-card bg-white p-8 rounded-lg shadow-lg text-center">
+          <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📞</span>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Call Us</h3>
+          <p class="text-gray-600 mb-4">Available 24/7 for bookings and support</p>
+          <a href="tel:+255686120646" class="text-2xl font-bold text-orange-600 hover:text-orange-700 transition-colors">
+            +255 686 120 646
+          </a>
+          <div class="mt-4">
+            <a href="tel:+255686120646" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-6 rounded-lg font-semibold transition-all hover:scale-105">
+              Call Now
+            </a>
+          </div>
+        </div>
+
+        <!-- WhatsApp Contact -->
+        <div class="contact-card bg-white p-8 rounded-lg shadow-lg text-center">
+          <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">💬</span>
+          </div>
+          <h3 class="text-xl font-bold mb-4">WhatsApp</h3>
+          <p class="text-gray-600 mb-4">Quick responses and instant booking</p>
+          <p class="text-2xl font-bold text-green-600 mb-4">+255 686 120 646</p>
+          <a href="https://wa.me/255686120646" target="_blank" rel="noopener" class="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg font-semibold transition-all hover:scale-105">
+            Chat Now
+          </a>
+        </div>
+
+        <!-- Email Contact -->
+        <div class="contact-card bg-white p-8 rounded-lg shadow-lg text-center">
+          <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📧</span>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Email Us</h3>
+          <p class="text-gray-600 mb-4">For detailed inquiries and quotes</p>
+          <a href="mailto:info@kingsafari.co.tz" class="text-lg font-bold text-blue-600 hover:text-blue-700 transition-colors block mb-4">
+            info@kingsafari.co.tz
+          </a>
+          <a href="mailto:info@kingsafari.co.tz" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg font-semibold transition-all hover:scale-105">
+            Send Email
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form and Info -->
+      <div class="grid gap-12 lg:grid-cols-2">
+        <!-- Contact Form -->
+        <div class="fade-in">
+          <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
+          <form id="contactForm" class="space-y-6">
+            <div class="grid gap-4 md:grid-cols-2">
+              <input type="text" name="name" placeholder="Your Name" class="w-full border border-gray-300 p-4 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors" required>
+              <input type="email" name="email" placeholder="Your Email" class="w-full border border-gray-300 p-4 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors" required>
+            </div>
+            <input type="tel" name="phone" placeholder="Phone Number (Optional)" class="w-full border border-gray-300 p-4 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors">
+            <select name="service" class="w-full border border-gray-300 p-4 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors" required>
+              <option value="">Select Service</option>
+              <option value="airport-transfer">Airport Transfer</option>
+              <option value="safari-tour">Safari Tour</option>
+              <option value="city-ride">City Ride</option>
+              <option value="business-trip">Business Trip</option>
+              <option value="wedding-event">Wedding/Event</option>
+              <option value="other">Other</option>
+            </select>
+            <textarea name="message" placeholder="Your Message" rows="5" class="w-full border border-gray-300 p-4 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors" required></textarea>
+            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-lg font-semibold transition-all hover:scale-105 flex items-center justify-center">
+              <span class="loading-spinner mr-2 hidden"></span>
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="fade-in">
+          <h2 class="text-3xl font-bold mb-6">Visit Our Locations</h2>
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div class="bg-orange-100 p-3 rounded-full">
+                <span class="text-xl">🏔️</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Arusha Office</h3>
+                <p class="text-gray-600">Main hub for Northern Safari Circuit</p>
+                <p class="text-sm text-gray-500 mt-1">Open: 24/7</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-orange-100 p-3 rounded-full">
+                <span class="text-xl">🗻</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Moshi Station</h3>
+                <p class="text-gray-600">Kilimanjaro region services</p>
+                <p class="text-sm text-gray-500 mt-1">Open: 24/7</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-orange-100 p-3 rounded-full">
+                <span class="text-xl">✈️</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Kilimanjaro Airport</h3>
+                <p class="text-gray-600">Airport pickup & drop-off</p>
+                <p class="text-sm text-gray-500 mt-1">Open: 24/7</p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-4">
+              <div class="bg-orange-100 p-3 rounded-full">
+                <span class="text-xl">🏙️</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">Dar es Salaam</h3>
+                <p class="text-gray-600">Business & executive services</p>
+                <p class="text-sm text-gray-500 mt-1">Open: 24/7</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operating Hours -->
+          <div class="mt-8 bg-gray-50 p-6 rounded-lg">
+            <h3 class="font-bold text-lg mb-4">Operating Hours</h3>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span>Customer Service:</span>
+                <span class="font-semibold">24/7</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Bookings:</span>
+                <span class="font-semibold">24/7</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Emergency Support:</span>
+                <span class="font-semibold">24/7</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Find Us on the Map</h2>
+      <div id="contactMap" class="h-96 rounded-lg overflow-hidden shadow-lg"></div>
+      <p class="text-center text-gray-600 mt-4">We operate across Tanzania with main hubs in Arusha, Moshi, and Dar es Salaam</p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <div class="max-w-3xl mx-auto space-y-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="font-bold text-lg mb-2">How far in advance should I book?</h3>
+          <p class="text-gray-600">We recommend booking at least 24 hours in advance, especially during peak season. However, we also accommodate last-minute bookings subject to availability.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="font-bold text-lg mb-2">Do you provide airport pickup services?</h3>
+          <p class="text-gray-600">Yes, we provide 24/7 airport pickup and drop-off services from Kilimanjaro International Airport, Arusha Airport, and Julius Nyerere International Airport in Dar es Salaam.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="font-bold text-lg mb-2">Are your vehicles insured?</h3>
+          <p class="text-gray-600">All our vehicles are fully insured with comprehensive coverage. We maintain all required licenses and certifications for your safety and peace of mind.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="font-bold text-lg mb-2">What payment methods do you accept?</h3>
+          <p class="text-gray-600">We accept cash (USD/TZS), mobile money, bank transfers, and major credit cards. Payment terms can be discussed based on your booking requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
+
 <footer class="bg-gray-900 text-gray-300 py-6 text-center">
-  <p>&copy; <span id="year"></span> King Safari &amp; Car Hire</p>
+  <p>&copy; <span id="year"></span> King Safari & Car Hire</p>
+  <p class="text-sm mt-2">Premium Mobility. Global Standards.</p>
 </footer>
-<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
+
+<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us on WhatsApp" target="_blank" rel="noopener">💬</a>
+
 <script>
+  // Mobile menu toggle
+  document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  });
+
+  // Set current year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Initialize map
   const map = L.map('contactMap').setView([-3.3869, 36.68299], 6);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
+    attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
+
+  // Add markers for different locations
+  const locations = [
+    { lat: -3.3869, lng: 36.68299, name: 'Arusha', popup: 'King Safari - Arusha Office<br>Main hub for Northern Safari Circuit' },
+    { lat: -3.3395, lng: 37.3374, name: 'Moshi', popup: 'King Safari - Moshi Station<br>Kilimanjaro region services' },
+    { lat: -3.4297, lng: 37.0744, name: 'Kilimanjaro Airport', popup: 'Kilimanjaro International Airport<br>24/7 pickup & drop-off' },
+    { lat: -6.7924, lng: 39.2083, name: 'Dar es Salaam', popup: 'King Safari - Dar es Salaam<br>Business & executive services' }
+  ];
+
+  locations.forEach(location => {
+    L.marker([location.lat, location.lng])
+      .addTo(map)
+      .bindPopup(location.popup);
+  });
+
+  // Contact form submission
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const spinner = this.querySelector('.loading-spinner');
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const formData = new FormData(this);
+    
+    spinner.classList.remove('hidden');
+    submitBtn.disabled = true;
+    
+    setTimeout(() => {
+      const message = `📧 CONTACT MESSAGE\n\nName: ${formData.get('name')}\nEmail: ${formData.get('email')}\nPhone: ${formData.get('phone') || 'Not provided'}\nService: ${formData.get('service')}\nMessage: ${formData.get('message')}`;
+      
+      const url = `https://wa.me/255686120646?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+      
+      spinner.classList.add('hidden');
+      submitBtn.disabled = false;
+      
+      this.reset();
+      alert('Thank you! Your message has been sent via WhatsApp. We will respond shortly.');
+    }, 1000);
+  });
+
+  // Add fade-in animation to sections on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in').forEach(element => {
+    observer.observe(element);
+  });
+
+  // Loading spinner styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .loading-spinner {
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #EA580C;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(style);
 </script>
 </body>
 </html>
