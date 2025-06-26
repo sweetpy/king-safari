@@ -59,13 +59,13 @@ Deploy to GitHub Pages:
 
 ## Backend
 
-The `backend` directory contains a small Flask application for staff members.
+The `docs/backend` directory contains a small Flask application for staff members.
 It includes a login page, asset uploader, reports, and a basic log viewer.
 
 Run it locally with:
 
 ```bash
-cd backend
+cd docs/backend
 pip install -r requirements.txt
 python app.py
 ```
@@ -73,9 +73,9 @@ python app.py
 Open `http://localhost:5000/login` in your browser and log in with
 `staff` / `pass123`.
 
-Uploaded images are saved to `backend/static/uploads`.
+Uploaded images are saved to `docs/backend/static/uploads`.
 
-Application events are written to `backend/app.log` and can be viewed in the
+Application events are written to `docs/backend/app.log` and can be viewed in the
 admin area under **Logs** at `http://localhost:5000/logs`.
 
 ## To-Do
