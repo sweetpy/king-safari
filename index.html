@@ -14,6 +14,8 @@
   <meta property="og:image" content="https://source.unsplash.com/1600x900/?safari,car">
   <meta name="keywords" content="Tanzania car hire, safari cars Arusha, airport transfers Moshi, Kilimanjaro tours, Alphard rental, Land Cruiser Tanzania">
   <link rel="icon" type="image/png" href="https://source.unsplash.com/32x32/?jeep">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
     body { font-family: 'Outfit', sans-serif; }
     .hover-scale:hover { transform: scale(1.03); transition: all 0.3s ease; }
@@ -31,13 +33,18 @@
 <nav class="bg-white shadow fixed top-0 inset-x-0 z-50">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
     <a href="index.html" class="text-xl font-semibold">King Safari</a>
-    <div class="space-x-4">
+    <div class="space-x-4 flex items-center">
       <a href="#home" class="hover:text-orange-600">Home</a>
       <a href="about.html" class="hover:text-orange-600">About</a>
       <a href="fleet.html" class="hover:text-orange-600">Fleet</a>
       <a href="gallery.html" class="hover:text-orange-600">Gallery</a>
       <a href="contact.html" class="hover:text-orange-600">Contact</a>
       <a href="terms.html" class="hover:text-orange-600">Terms</a>
+      <select id="languageSelector" class="border rounded p-1 text-sm">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+        <option value="es">ES</option>
+      </select>
     </div>
   </div>
 </nav>
@@ -51,8 +58,26 @@
   <div class="container mx-auto px-4">
     <h2 class="text-3xl font-semibold text-center mb-8">Instant Booking</h2>
     <form id="bookingForm" class="max-w-xl mx-auto grid gap-4">
-      <input type="text" placeholder="Pickup Location" class="border p-3 rounded" required>
-      <input type="text" placeholder="Dropoff Location" class="border p-3 rounded" required>
+      <select id="pickup" class="border p-3 rounded" required>
+        <option value="" selected disabled>Pickup Location</option>
+        <option>Arusha</option>
+        <option>Moshi</option>
+        <option>Kilimanjaro Airport</option>
+        <option>Dar es Salaam</option>
+        <option>Dodoma</option>
+        <option value="other">Other</option>
+      </select>
+      <input type="text" id="pickupOther" class="border p-3 rounded hidden" placeholder="Enter pickup" />
+      <select id="dropoff" class="border p-3 rounded" required>
+        <option value="" selected disabled>Dropoff Location</option>
+        <option>Arusha</option>
+        <option>Moshi</option>
+        <option>Kilimanjaro Airport</option>
+        <option>Dar es Salaam</option>
+        <option>Dodoma</option>
+        <option value="other">Other</option>
+      </select>
+      <input type="text" id="dropoffOther" class="border p-3 rounded hidden" placeholder="Enter dropoff" />
       <input type="date" class="border p-3 rounded" required>
       <input type="time" class="border p-3 rounded" required>
       <select class="border p-3 rounded" required>
@@ -68,6 +93,9 @@
         <option>City Ride</option>
         <option>Business Trip</option>
       </select>
+      <button id="toggleMap" type="button" class="bg-gray-200 text-gray-800 py-2 rounded">Pick Location on Map</button>
+      <div id="map" class="h-60 hidden"></div>
+      <input id="coordinates" type="text" class="border p-3 rounded hidden" readonly>
       <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white py-3 rounded">Confirm via WhatsApp</button>
     </form>
   </div>
@@ -145,12 +173,65 @@
 </footer>
 <a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
 <script>
+  const pickup = document.getElementById('pickup');
+  const dropoff = document.getElementById('dropoff');
+  const pickupOther = document.getElementById('pickupOther');
+  const dropoffOther = document.getElementById('dropoffOther');
+  pickup.addEventListener('change', () => {
+    pickupOther.classList.toggle('hidden', pickup.value !== 'other');
+  });
+  dropoff.addEventListener('change', () => {
+    dropoffOther.classList.toggle('hidden', dropoff.value !== 'other');
+  });
+
+  let map, marker;
+  document.getElementById('toggleMap').addEventListener('click', () => {
+    const mapDiv = document.getElementById('map');
+    mapDiv.classList.toggle('hidden');
+    if (!map) {
+      map = L.map('map').setView([-3.3869, 36.68299], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+      map.on('click', e => {
+        if (marker) marker.setLatLng(e.latlng); else marker = L.marker(e.latlng).addTo(map);
+        const coord = document.getElementById('coordinates');
+        coord.classList.remove('hidden');
+        coord.value = e.latlng.lat.toFixed(5) + ', ' + e.latlng.lng.toFixed(5);
+      });
+    }
+  });
+
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const data = Array.from(this.querySelectorAll('input, select')).map(i => i.value).join(' | ');
+    const data = Array.from(this.querySelectorAll('input:not(.hidden), select')).map(i => i.value).join(' | ');
     const url = 'https://wa.me/255686120646?text=' + encodeURIComponent('Booking request: ' + data);
     window.open(url, '_blank');
   });
+
+  const translations = {
+    sw: {
+      heroTitle: 'Safari na Kukodisha Gari ya Kifahari',
+      bookNow: 'Weka Nafasi Sasa',
+      instant: 'Weka Nafasi Haraka',
+      confirm: 'Thibitisha kupitia WhatsApp'
+    },
+    es: {
+      heroTitle: 'Alquiler de Coches y Safaris Premium',
+      bookNow: 'Reservar Ahora',
+      instant: 'Reserva Instant\u00E1nea',
+      confirm: 'Confirmar por WhatsApp'
+    }
+  };
+  document.getElementById('languageSelector').addEventListener('change', function() {
+    const lang = this.value;
+    const t = translations[lang];
+    document.querySelector('#home h1').textContent = t ? t.heroTitle : 'Premium Safari & Car Hire';
+    document.querySelector('#home a').textContent = t ? t.bookNow : 'Book Now';
+    document.querySelector('#booking h2').textContent = t ? t.instant : 'Instant Booking';
+    document.querySelector('#booking button[type="submit"]').textContent = t ? t.confirm : 'Confirm via WhatsApp';
+  });
+
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
