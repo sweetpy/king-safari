@@ -54,7 +54,7 @@ Note: The pages load Tailwind via CDN for simplicity. In production, generate a 
 Deploy to GitHub Pages:
 
 1. Push this repository to GitHub.
-2. In **Settings > Pages**, choose the `main` branch and root folder.
+2. In **Settings > Pages**, choose the `main` branch and `docs/` folder.
 3. Your site will be available at `https://<username>.github.io/king-safari/`.
 
 ## Backend
