@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+<nav class="bg-white shadow p-4 flex justify-between">
+    <a href="{{ url_for('dashboard') }}" class="text-orange-600">&larr; Back</a>
+    <span class="font-semibold">Reports &amp; Insights</span>
+    <a href="{{ url_for('logout') }}" class="text-orange-600">Logout</a>
+</nav>
+<div class="p-6 space-y-4">
+    <div class="bg-white shadow rounded p-4">
+        <h2 class="font-semibold mb-2">Site Visits</h2>
+        <p>{{ visits }} visits recorded.</p>
+    </div>
+    <div class="bg-white shadow rounded p-4">
+        <h2 class="font-semibold mb-2">Bookings</h2>
+        <p>{{ bookings }} bookings made.</p>
+    </div>
+</div>
+</body>
+</html>

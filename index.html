@@ -11,9 +11,9 @@
   <meta name="description" content="Luxury Car Hire & Safari Services in Tanzania: Arusha, Moshi, Kilimanjaro & Dar. Book Toyota Alphard, Land Cruiser or Coaster now.">
   <meta property="og:title" content="King Safari & Car Hire">
   <meta property="og:description" content="Top-rated luxury safari and car rental services in Tanzania. Available in Arusha, Kilimanjaro, Moshi & Dar.">
-  <meta property="og:image" content="https://source.unsplash.com/1600x900/?safari,car">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=60">
   <meta name="keywords" content="Tanzania car hire, safari cars Arusha, airport transfers Moshi, Kilimanjaro tours, Alphard rental, Land Cruiser Tanzania">
-  <link rel="icon" type="image/png" href="https://source.unsplash.com/32x32/?jeep">
+  <link rel="icon" type="image/png" href="https://placehold.co/32x32/png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
@@ -40,6 +40,8 @@
       <a href="gallery.html" class="hover:text-orange-600">Gallery</a>
       <a href="contact.html" class="hover:text-orange-600">Contact</a>
       <a href="terms.html" class="hover:text-orange-600">Terms</a>
+      <a href="http://localhost:5000/login" class="hover:text-orange-600">Staff Login</a>
+      <a href="http://localhost:5000/logs" class="hover:text-orange-600">Logs</a>
       <select id="languageSelector" class="border rounded p-1 text-sm">
         <option value="en">EN</option>
         <option value="sw">SW</option>
@@ -48,7 +50,7 @@
     </div>
   </div>
 </nav>
-<section id="home" class="h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://source.unsplash.com/1600x900/?safari');">
+<section id="home" class="h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1533387520709-752d83de3631?auto=format&fit=crop&w=1200&q=60');">
   <div class="text-center text-white px-4">
     <h1 class="text-4xl md:text-6xl font-bold mb-6 drop-shadow">Premium Safari & Car Hire</h1>
     <a href="#booking" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-8 rounded-full text-lg">Book Now</a>
@@ -80,12 +82,14 @@
       <input type="text" id="dropoffOther" class="border p-3 rounded hidden" placeholder="Enter dropoff" />
       <input type="date" class="border p-3 rounded" required>
       <input type="time" class="border p-3 rounded" required>
-      <select class="border p-3 rounded" required>
+      <select id="vehicle" class="border p-3 rounded" required>
         <option selected disabled>Choose Vehicle</option>
         <option>Alphard</option>
         <option>Land Cruiser</option>
         <option>Coaster Minibus</option>
+        <option value="other">Any Other</option>
       </select>
+      <input type="text" id="vehicleOther" class="border p-3 rounded hidden" placeholder="Enter vehicle" />
       <select class="border p-3 rounded" required>
         <option selected disabled>Use Case</option>
         <option>Airport Transfer</option>
@@ -93,9 +97,10 @@
         <option>City Ride</option>
         <option>Business Trip</option>
       </select>
-      <button id="toggleMap" type="button" class="bg-gray-200 text-gray-800 py-2 rounded">Pick Location on Map</button>
-      <div id="map" class="h-60 hidden"></div>
-      <input id="coordinates" type="text" class="border p-3 rounded hidden" readonly>
+      <button id="toggleMap" type="button" class="bg-gray-200 text-gray-800 py-2 rounded">Pick Route on Map</button>
+      <div id="map" class="h-60 hidden mb-2"></div>
+      <input id="pickupCoord" type="text" class="border p-3 rounded hidden mb-2" readonly>
+      <input id="dropoffCoord" type="text" class="border p-3 rounded hidden" readonly>
       <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white py-3 rounded">Confirm via WhatsApp</button>
     </form>
   </div>
@@ -128,21 +133,21 @@
     <h2 class="text-3xl font-semibold text-center mb-8">Our Fleet</h2>
     <div class="grid gap-6 md:grid-cols-3">
       <div class="shadow hover-scale">
-        <img src="https://source.unsplash.com/400x250/?van" alt="Toyota Alphard" class="w-full h-48 object-cover">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=400&q=60" alt="Toyota Alphard" class="w-full h-48 object-cover">
         <div class="p-4">
           <h3 class="font-semibold mb-2">Toyota Alphard (VIP)</h3>
           <p>Luxury comfort for executives and VIPs.</p>
         </div>
       </div>
       <div class="shadow hover-scale">
-        <img src="https://source.unsplash.com/400x250/?landcruiser" alt="Land Cruiser" class="w-full h-48 object-cover">
+        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=400&q=60" alt="Land Cruiser" class="w-full h-48 object-cover">
         <div class="p-4">
           <h3 class="font-semibold mb-2">Land Cruiser (Safari)</h3>
           <p>Rugged 4x4 perfect for safari adventures.</p>
         </div>
       </div>
       <div class="shadow hover-scale">
-        <img src="https://source.unsplash.com/400x250/?minibus" alt="Coaster Minibus" class="w-full h-48 object-cover">
+        <img src="https://images.unsplash.com/photo-1586769852836-c4f16a1524a6?auto=format&fit=crop&w=400&q=60" alt="Coaster Minibus" class="w-full h-48 object-cover">
         <div class="p-4">
           <h3 class="font-semibold mb-2">Coaster Minibus (Groups)</h3>
           <p>Spacious option for large families or tour groups.</p>
@@ -177,14 +182,19 @@
   const dropoff = document.getElementById('dropoff');
   const pickupOther = document.getElementById('pickupOther');
   const dropoffOther = document.getElementById('dropoffOther');
+  const vehicle = document.getElementById('vehicle');
+  const vehicleOther = document.getElementById('vehicleOther');
   pickup.addEventListener('change', () => {
     pickupOther.classList.toggle('hidden', pickup.value !== 'other');
   });
   dropoff.addEventListener('change', () => {
     dropoffOther.classList.toggle('hidden', dropoff.value !== 'other');
   });
+  vehicle.addEventListener('change', () => {
+    vehicleOther.classList.toggle('hidden', vehicle.value !== 'other');
+  });
 
-  let map, marker;
+  let map, pickupMarker, dropoffMarker, routeLine, selecting = 'pickup';
   document.getElementById('toggleMap').addEventListener('click', () => {
     const mapDiv = document.getElementById('map');
     mapDiv.classList.toggle('hidden');
@@ -194,10 +204,21 @@
         attribution: '&copy; OpenStreetMap'
       }).addTo(map);
       map.on('click', e => {
-        if (marker) marker.setLatLng(e.latlng); else marker = L.marker(e.latlng).addTo(map);
-        const coord = document.getElementById('coordinates');
-        coord.classList.remove('hidden');
-        coord.value = e.latlng.lat.toFixed(5) + ', ' + e.latlng.lng.toFixed(5);
+        if (selecting === 'pickup') {
+          if (pickupMarker) pickupMarker.setLatLng(e.latlng); else pickupMarker = L.marker(e.latlng).addTo(map);
+          const field = document.getElementById('pickupCoord');
+          field.classList.remove('hidden');
+          field.value = e.latlng.lat.toFixed(5) + ', ' + e.latlng.lng.toFixed(5);
+          selecting = 'dropoff';
+        } else {
+          if (dropoffMarker) dropoffMarker.setLatLng(e.latlng); else dropoffMarker = L.marker(e.latlng).addTo(map);
+          const field = document.getElementById('dropoffCoord');
+          field.classList.remove('hidden');
+          field.value = e.latlng.lat.toFixed(5) + ', ' + e.latlng.lng.toFixed(5);
+          const start = pickupMarker.getLatLng();
+          const end = dropoffMarker.getLatLng();
+          if (routeLine) routeLine.setLatLngs([start, end]); else routeLine = L.polyline([start, end], {color: 'red'}).addTo(map);
+        }
       });
     }
   });

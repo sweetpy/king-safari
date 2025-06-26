@@ -16,7 +16,7 @@ This site provides a responsive landing page with sections for services, fleet o
 | Icons & Imagery   | Unicode, Unsplash             |
 | Chat Integration  | WhatsApp `wa.me` link         |
 | Analytics         | Google Analytics (GTag setup) |
-| Deployment Target | GitHub Pages                  |
+| Deployment Target | GitHub Pages, Flask backend   |
 Note: The pages load Tailwind via CDN for simplicity. In production, generate a static CSS file using `npx tailwindcss -o styles.css --minify` and link that instead.
 
 
@@ -41,11 +41,13 @@ Note: The pages load Tailwind via CDN for simplicity. In production, generate a 
 8. **Contact Section** – Phone numbers and service locations.
 9. **Footer** – Auto-updating year with tagline.
 10. **Mobile Optimized** – Responsive utility classes for smaller screens.
+11. **Admin Backend** – Flask app for asset uploads or image links plus reports.
+12. **Visuals** – Images load from Unsplash via external URLs so no binary files are stored in the repo.
 
 ## SEO & Analytics
 
 - `meta` tags for title, description, keywords, and Open Graph preview.
-- Favicon sourced from Unsplash.
+- Favicon loaded from an online placeholder to avoid binary assets.
 - Google Analytics snippet included (replace `G-XXXXXXXXXX` with your ID).
 
 ## Deployment
@@ -55,6 +57,31 @@ Deploy to GitHub Pages:
 1. Push this repository to GitHub.
 2. In **Settings > Pages**, choose the `main` branch and root folder.
 3. Your site will be available at `https://<username>.github.io/king-safari/`.
+
+## Backend
+
+The `backend` directory contains a small Flask application for staff members.
+It includes a login page, asset uploader, reports, and a basic log viewer.
+
+Run it locally with:
+
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
+
+Open `http://localhost:5000/login` in your browser and log in with
+`staff` / `pass123`.
+
+The static site includes a **Staff Login** link that points to this address, so
+ensure the Flask app is running locally when clicking it.
+
+Uploaded images are saved to `backend/static/uploads`.
+Image URLs added in the asset manager are stored in `backend/links.txt`.
+
+Application events are written to `backend/app.log` and can be viewed in the
+admin area under **Logs** at `http://localhost:5000/logs`.
 
 ## To-Do
 
