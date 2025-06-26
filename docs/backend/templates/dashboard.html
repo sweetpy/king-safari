@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+<nav class="bg-white shadow p-4 flex justify-between">
+    <span class="font-semibold">Admin Dashboard</span>
+    <a href="{{ url_for('logout') }}" class="text-orange-600">Logout</a>
+</nav>
+<div class="p-6 space-y-4">
+    <a href="{{ url_for('assets') }}" class="block p-4 bg-white shadow rounded hover:bg-gray-50">Manage Assets</a>
+    <a href="{{ url_for('reports') }}" class="block p-4 bg-white shadow rounded hover:bg-gray-50">Reports &amp; Insights</a>
+    <a href="{{ url_for('view_logs') }}" class="block p-4 bg-white shadow rounded hover:bg-gray-50">Logs</a>
+</div>
+</body>
+</html>
