@@ -17,6 +17,8 @@ This site provides a responsive landing page with sections for services, fleet o
 | Chat Integration  | WhatsApp `wa.me` link         |
 | Analytics         | Google Analytics (GTag setup) |
 | Deployment Target | GitHub Pages                  |
+Note: The pages load Tailwind via CDN for simplicity. In production, generate a static CSS file using `npx tailwindcss -o styles.css --minify` and link that instead.
+
 
 ## Key Files
 
