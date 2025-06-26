@@ -13,56 +13,257 @@
   <style>
     body { font-family: 'Outfit', sans-serif; }
     .hover-scale:hover { transform: scale(1.03); transition: all 0.3s ease; }
-    .floating-whatsapp { position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white; padding: 12px 16px; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 9999; }
+    .floating-whatsapp { 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      background-color: #25D366; 
+      color: white; 
+      padding: 12px 16px; 
+      border-radius: 50%; 
+      font-size: 24px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+      z-index: 9999;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .nav-blur {
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.95);
+    }
   </style>
 </head>
 <body class="bg-white text-gray-800">
-<nav class="bg-white shadow fixed top-0 inset-x-0 z-50">
+<nav class="nav-blur shadow fixed top-0 inset-x-0 z-50">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-    <a href="index.html" class="text-xl font-semibold">King Safari</a>
+    <a href="index.html" class="text-xl font-bold text-orange-600">King Safari</a>
     <div class="space-x-4">
-      <a href="index.html#home" class="hover:text-orange-600">Home</a>
-      <a href="about.html" class="hover:text-orange-600">About</a>
-      <a href="fleet.html" class="hover:text-orange-600">Fleet</a>
-      <a href="gallery.html" class="hover:text-orange-600">Gallery</a>
-      <a href="contact.html" class="hover:text-orange-600">Contact</a>
-      <a href="terms.html" class="hover:text-orange-600">Terms</a>
-      <a href="/login" class="hover:text-orange-600">Staff Login</a>
+      <a href="index.html#home" class="hover:text-orange-600 transition-colors">Home</a>
+      <a href="about.html" class="hover:text-orange-600 transition-colors">About</a>
+      <a href="fleet.html" class="hover:text-orange-600 transition-colors">Fleet</a>
+      <a href="gallery.html" class="hover:text-orange-600 transition-colors">Gallery</a>
+      <a href="contact.html" class="hover:text-orange-600 transition-colors">Contact</a>
+      <a href="terms.html" class="hover:text-orange-600 transition-colors">Terms</a>
+      <a href="backend/login" class="hover:text-orange-600 transition-colors">Staff Login</a>
     </div>
   </div>
 </nav>
+
 <main class="pt-24 pb-16">
   <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-semibold text-center mb-8">Our Fleet</h1>
-    <div class="grid gap-6 md:grid-cols-3">
-      <div class="shadow hover-scale">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27400%27%20height%3D%27250%27%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%2523EA580C%27/%3E%3C/svg%3E" alt="Toyota Alphard" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h2 class="font-semibold mb-2">Toyota Alphard (VIP)</h2>
-          <p>Luxury comfort for executives and VIPs.</p>
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4">Our Premium Fleet</h1>
+      <p class="text-xl text-gray-600">Choose from our carefully maintained collection of luxury vehicles</p>
+    </div>
+    
+    <div class="grid gap-8 lg:grid-cols-3 md:grid-cols-2">
+      <!-- Toyota Alphard VIP -->
+      <div class="bg-white shadow-xl rounded-lg overflow-hidden hover-scale">
+        <img src="https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg" alt="Toyota Alphard VIP" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-4">
+            <h2 class="text-2xl font-bold">Toyota Alphard</h2>
+            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">VIP</span>
+          </div>
+          <p class="text-gray-600 mb-6">Ultimate luxury for executives and VIPs with premium leather seating, climate control, and professional chauffeur service.</p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="text-center">
+              <div class="text-2xl mb-1">👥</div>
+              <p class="text-sm text-gray-600">7-8 Passengers</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">❄️</div>
+              <p class="text-sm text-gray-600">Climate Control</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🛋️</div>
+              <p class="text-sm text-gray-600">Leather Interior</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🎵</div>
+              <p class="text-sm text-gray-600">Premium Audio</p>
+            </div>
+          </div>
+          
+          <div class="space-y-2 mb-6">
+            <h3 class="font-semibold">Perfect For:</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Executive airport transfers</li>
+              <li>• Business meetings</li>
+              <li>• VIP events and weddings</li>
+              <li>• Luxury city tours</li>
+            </ul>
+          </div>
+          
+          <a href="https://wa.me/255686120646?text=I'm interested in booking the Toyota Alphard VIP" 
+             class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold transition-all hover:scale-105 block text-center" 
+             target="_blank" rel="noopener">
+            Book Alphard
+          </a>
         </div>
       </div>
-      <div class="shadow hover-scale">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27400%27%20height%3D%27250%27%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%2523EA580C%27/%3E%3C/svg%3E" alt="Land Cruiser" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h2 class="font-semibold mb-2">Land Cruiser (Safari)</h2>
-          <p>Rugged 4x4 perfect for safari adventures.</p>
+
+      <!-- Land Cruiser Safari -->
+      <div class="bg-white shadow-xl rounded-lg overflow-hidden hover-scale">
+        <img src="https://images.pexels.com/photos/1119796/pexels-photo-1119796.jpeg" alt="Land Cruiser Safari" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-4">
+            <h2 class="text-2xl font-bold">Land Cruiser</h2>
+            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Safari</span>
+          </div>
+          <p class="text-gray-600 mb-6">Rugged 4x4 perfect for safari adventures and off-road exploration with pop-up roof for optimal game viewing.</p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="text-center">
+              <div class="text-2xl mb-1">👥</div>
+              <p class="text-sm text-gray-600">4-6 Passengers</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🚙</div>
+              <p class="text-sm text-gray-600">4WD Capability</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🔭</div>
+              <p class="text-sm text-gray-600">Pop-up Roof</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🧭</div>
+              <p class="text-sm text-gray-600">Safari Guide</p>
+            </div>
+          </div>
+          
+          <div class="space-y-2 mb-6">
+            <h3 class="font-semibold">Perfect For:</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Serengeti & Ngorongoro safaris</li>
+              <li>• Game drives and wildlife viewing</li>
+              <li>• Off-road adventures</li>
+              <li>• Photography expeditions</li>
+            </ul>
+          </div>
+          
+          <a href="https://wa.me/255686120646?text=I'm interested in booking the Land Cruiser for safari" 
+             class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold transition-all hover:scale-105 block text-center" 
+             target="_blank" rel="noopener">
+            Book Land Cruiser
+          </a>
         </div>
       </div>
-      <div class="shadow hover-scale">
-        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27400%27%20height%3D%27250%27%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27%2523EA580C%27/%3E%3C/svg%3E" alt="Coaster Minibus" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h2 class="font-semibold mb-2">Coaster Minibus (Groups)</h2>
-          <p>Spacious option for large families or tour groups.</p>
+
+      <!-- Coaster Minibus -->
+      <div class="bg-white shadow-xl rounded-lg overflow-hidden hover-scale">
+        <img src="https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg" alt="Coaster Minibus" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-4">
+            <h2 class="text-2xl font-bold">Coaster Minibus</h2>
+            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Groups</span>
+          </div>
+          <p class="text-gray-600 mb-6">Spacious and comfortable option for large families, tour groups, and corporate events with ample luggage space.</p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="text-center">
+              <div class="text-2xl mb-1">👥</div>
+              <p class="text-sm text-gray-600">15-25 Passengers</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🧳</div>
+              <p class="text-sm text-gray-600">Large Luggage</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">🪑</div>
+              <p class="text-sm text-gray-600">Comfort Seating</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl mb-1">👨‍✈️</div>
+              <p class="text-sm text-gray-600">Group Specialist</p>
+            </div>
+          </div>
+          
+          <div class="space-y-2 mb-6">
+            <h3 class="font-semibold">Perfect For:</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Large family trips</li>
+              <li>• Corporate events</li>
+              <li>• Wedding parties</li>
+              <li>• Group tours and conferences</li>
+            </ul>
+          </div>
+          
+          <a href="https://wa.me/255686120646?text=I'm interested in booking the Coaster Minibus for groups" 
+             class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold transition-all hover:scale-105 block text-center" 
+             target="_blank" rel="noopener">
+            Book Coaster
+          </a>
         </div>
+      </div>
+    </div>
+
+    <!-- Additional Fleet Information -->
+    <div class="mt-16 bg-gray-50 rounded-lg p-8">
+      <h2 class="text-3xl font-bold text-center mb-8">Fleet Features & Standards</h2>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="text-center">
+          <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">🛡️</span>
+          </div>
+          <h3 class="font-semibold mb-2">Fully Insured</h3>
+          <p class="text-gray-600 text-sm">All vehicles are comprehensively insured for your safety and peace of mind.</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">🔧</span>
+          </div>
+          <h3 class="font-semibold mb-2">Regular Maintenance</h3>
+          <p class="text-gray-600 text-sm">Professional servicing and maintenance to ensure reliability and safety.</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">👨‍✈️</span>
+          </div>
+          <h3 class="font-semibold mb-2">Professional Drivers</h3>
+          <p class="text-gray-600 text-sm">Experienced, licensed drivers with excellent local knowledge.</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📱</span>
+          </div>
+          <h3 class="font-semibold mb-2">24/7 Support</h3>
+          <p class="text-gray-600 text-sm">Round-the-clock customer support for any assistance needed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="mt-16 text-center">
+      <h2 class="text-3xl font-bold mb-4">Ready to Book Your Vehicle?</h2>
+      <p class="text-xl text-gray-600 mb-8">Contact us now for availability and pricing</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="tel:+255686120646" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-8 rounded-lg font-semibold transition-all hover:scale-105">
+          📞 Call Now
+        </a>
+        <a href="https://wa.me/255686120646" target="_blank" rel="noopener" class="bg-green-500 hover:bg-green-600 text-white py-3 px-8 rounded-lg font-semibold transition-all hover:scale-105">
+          💬 WhatsApp
+        </a>
+        <a href="index.html#booking" class="bg-gray-500 hover:bg-gray-600 text-white py-3 px-8 rounded-lg font-semibold transition-all hover:scale-105">
+          📝 Book Online
+        </a>
       </div>
     </div>
   </div>
 </main>
+
 <footer class="bg-gray-900 text-gray-300 py-6 text-center">
-  <p>&copy; <span id="year"></span> King Safari &amp; Car Hire</p>
+  <p>&copy; <span id="year"></span> King Safari & Car Hire</p>
+  <p class="text-sm mt-2">Premium Mobility. Global Standards.</p>
 </footer>
-<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
+
+<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us on WhatsApp" target="_blank" rel="noopener">💬</a>
+
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
