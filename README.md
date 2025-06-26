@@ -13,7 +13,7 @@ This site provides a responsive landing page with sections for services, fleet o
 | Frontend          | HTML5                         |
 | Styling           | Tailwind CSS (via CDN)        |
 | Fonts             | Google Fonts - Outfit         |
-| Icons & Imagery   | Unicode, Unsplash             |
+| Icons & Imagery   | Unicode, Unsplash w/ inline fallback |
 | Chat Integration  | WhatsApp `wa.me` link         |
 | Analytics         | Google Analytics (GTag setup) |
 | Deployment Target | GitHub Pages, Flask backend   |
@@ -42,11 +42,12 @@ Note: The pages load Tailwind via CDN for simplicity. In production, generate a 
 9. **Footer** – Auto-updating year with tagline.
 10. **Mobile Optimized** – Responsive utility classes for smaller screens.
 11. **Admin Backend** – Flask app for asset uploads and reports.
+12. **Image Reliability** – Remote photos load from Unsplash with inline SVG placeholders if offline.
 
 ## SEO & Analytics
 
 - `meta` tags for title, description, keywords, and Open Graph preview.
-- Favicon sourced from Unsplash.
+- Favicon uses an inline SVG so the site works even without network access.
 - Google Analytics snippet included (replace `G-XXXXXXXXXX` with your ID).
 
 ## Deployment
