@@ -20,19 +20,24 @@
 <nav class="bg-white shadow fixed top-0 inset-x-0 z-50">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
     <a href="index.html" class="text-xl font-semibold">King Safari</a>
-    <div class="space-x-4">
-      <a href="index.html#home" class="hover:text-orange-600">Home</a>
-      <a href="about.html" class="hover:text-orange-600">About</a>
-      <a href="fleet.html" class="hover:text-orange-600">Fleet</a>
-      <a href="gallery.html" class="hover:text-orange-600">Gallery</a>
-      <a href="contact.html" class="hover:text-orange-600">Contact</a>
-      <a href="terms.html" class="hover:text-orange-600">Terms</a>
+    <div class="space-x-4 flex items-center">
+      <a href="index.html#home" class="hover:text-orange-600" data-i18n="navHome">Home</a>
+      <a href="about.html" class="hover:text-orange-600" data-i18n="navAbout">About</a>
+      <a href="fleet.html" class="hover:text-orange-600" data-i18n="navFleet">Fleet</a>
+      <a href="gallery.html" class="hover:text-orange-600" data-i18n="navGallery">Gallery</a>
+      <a href="contact.html" class="hover:text-orange-600" data-i18n="navContact">Contact</a>
+      <a href="terms.html" class="hover:text-orange-600" data-i18n="navTerms">Terms</a>
+      <select id="languageSelector" class="border rounded p-1 text-sm">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+        <option value="es">ES</option>
+      </select>
     </div>
   </div>
 </nav>
 <main class="pt-24 pb-16">
   <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-semibold text-center mb-8">Our Fleet</h1>
+    <h1 class="text-3xl font-semibold text-center mb-8" data-i18n="fleetTitle">Our Fleet</h1>
     <div class="grid gap-6 md:grid-cols-3">
       <div class="shadow hover-scale">
         <img src="https://source.unsplash.com/400x250/?van" alt="Toyota Alphard" class="w-full h-48 object-cover">
@@ -64,6 +69,40 @@
 <a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+  const translations = {
+    sw: {
+      navHome: 'Nyumbani',
+      navAbout: 'Kuhusu',
+      navFleet: 'Magari',
+      navGallery: 'Picha',
+      navContact: 'Wasiliana',
+      navTerms: 'Masharti',
+      fleetTitle: 'Magari Yetu'
+    },
+    es: {
+      navHome: 'Inicio',
+      navAbout: 'Acerca',
+      navFleet: 'Flota',
+      navGallery: 'Galería',
+      navContact: 'Contacto',
+      navTerms: 'Términos',
+      fleetTitle: 'Nuestra Flota'
+    }
+  };
+
+  function applyTranslations(lang) {
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t && t[key]) el.textContent = t[key];
+    });
+  }
+
+  document.getElementById('languageSelector').addEventListener('change', function() {
+    applyTranslations(this.value);
+  });
+
+  applyTranslations('en');
 </script>
 </body>
 </html>

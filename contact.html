@@ -21,23 +21,28 @@
 <nav class="bg-white shadow fixed top-0 inset-x-0 z-50">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
     <a href="index.html" class="text-xl font-semibold">King Safari</a>
-    <div class="space-x-4">
-      <a href="index.html#home" class="hover:text-orange-600">Home</a>
-      <a href="about.html" class="hover:text-orange-600">About</a>
-      <a href="fleet.html" class="hover:text-orange-600">Fleet</a>
-      <a href="gallery.html" class="hover:text-orange-600">Gallery</a>
-      <a href="contact.html" class="hover:text-orange-600">Contact</a>
-      <a href="terms.html" class="hover:text-orange-600">Terms</a>
+    <div class="space-x-4 flex items-center">
+      <a href="index.html#home" class="hover:text-orange-600" data-i18n="navHome">Home</a>
+      <a href="about.html" class="hover:text-orange-600" data-i18n="navAbout">About</a>
+      <a href="fleet.html" class="hover:text-orange-600" data-i18n="navFleet">Fleet</a>
+      <a href="gallery.html" class="hover:text-orange-600" data-i18n="navGallery">Gallery</a>
+      <a href="contact.html" class="hover:text-orange-600" data-i18n="navContact">Contact</a>
+      <a href="terms.html" class="hover:text-orange-600" data-i18n="navTerms">Terms</a>
+      <select id="languageSelector" class="border rounded p-1 text-sm">
+        <option value="en">EN</option>
+        <option value="sw">SW</option>
+        <option value="es">ES</option>
+      </select>
     </div>
   </div>
 </nav>
 <main class="pt-24 pb-16">
   <div class="container mx-auto px-4 text-center">
-    <h1 class="text-3xl font-semibold mb-6">Contact Us</h1>
-    <p class="mb-4">Phone: <a href="tel:+255686120646" class="text-orange-600">+255 686 120 646</a></p>
+    <h1 class="text-3xl font-semibold mb-6" data-i18n="contactTitle">Contact Us</h1>
+    <p class="mb-4" data-i18n="contactCall">Phone: <a href="tel:+255686120646" class="text-orange-600">+255 686 120 646</a></p>
     <p class="mb-4">Email: <a href="mailto:info@kingsafari.co.tz" class="text-orange-600">info@kingsafari.co.tz</a></p>
-    <p class="mb-4">Locations: Arusha, Moshi, Kilimanjaro &amp; Dar es Salaam</p>
-    <a href="https://wa.me/255686120646" target="_blank" rel="noopener" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded">Chat on WhatsApp</a>
+    <p class="mb-4" data-i18n="contactAvail">Locations: Arusha, Moshi, Kilimanjaro &amp; Dar es Salaam</p>
+    <a href="https://wa.me/255686120646" target="_blank" rel="noopener" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded" data-i18n="chatWhatsApp">Chat on WhatsApp</a>
     <div id="contactMap" class="h-80 mt-6"></div>
   </div>
 </main>
@@ -51,6 +56,46 @@
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
   }).addTo(map);
+  const translations = {
+    sw: {
+      navHome: 'Nyumbani',
+      navAbout: 'Kuhusu',
+      navFleet: 'Magari',
+      navGallery: 'Picha',
+      navContact: 'Wasiliana',
+      navTerms: 'Masharti',
+      contactTitle: 'Wasiliana Nasi',
+      contactCall: 'Piga simu',
+      contactAvail: 'Tunapatikana Arusha, Moshi, Kilimanjaro & Dar es Salaam',
+      chatWhatsApp: 'Tuma Ujumbe WhatsApp'
+    },
+    es: {
+      navHome: 'Inicio',
+      navAbout: 'Acerca',
+      navFleet: 'Flota',
+      navGallery: 'Galería',
+      navContact: 'Contacto',
+      navTerms: 'Términos',
+      contactTitle: 'Contáctanos',
+      contactCall: 'Llámanos',
+      contactAvail: 'Disponible en Arusha, Moshi, Kilimanjaro y Dar es Salaam',
+      chatWhatsApp: 'Enviar WhatsApp'
+    }
+  };
+
+  function applyTranslations(lang) {
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t && t[key]) el.textContent = t[key];
+    });
+  }
+
+  document.getElementById('languageSelector').addEventListener('change', function() {
+    applyTranslations(this.value);
+  });
+
+  applyTranslations('en');
 </script>
 </body>
 </html>
