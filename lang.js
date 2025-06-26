@@ -38,6 +38,7 @@ const translations = {
     footerTagline: 'Uhamaji Bora. Viwango vya Dunia.',
     aboutTitle: 'Kuhusu King Safari',
     galleryTitle: 'Picha',
+    galleryDesc: 'Mkusanyiko wa matukio yetu ya safari na magari.',
     termsTitle: 'Masharti ya Kukodisha'
   },
   es: {
@@ -79,6 +80,7 @@ const translations = {
     footerTagline: 'Movilidad Premium. Estándares Globales.',
     aboutTitle: 'Acerca de King Safari',
     galleryTitle: 'Galería',
+    galleryDesc: 'Una colección de nuestras aventuras y vehículos.',
     termsTitle: 'Términos de Alquiler'
   }
 };
