@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Learn about King Safari &amp; Car Hire, Tanzania's trusted provider for luxury vehicles and safari experiences.">
   <link rel="icon" type="image/png" href="https://source.unsplash.com/32x32/?jeep">
   <style>
     body { font-family: 'Outfit', sans-serif; }
@@ -31,13 +32,22 @@
 <main class="pt-24 pb-16">
   <div class="container mx-auto px-4">
     <h1 class="text-3xl font-semibold mb-4">About King Safari</h1>
-    <p class="mb-4">King Safari & Car Hire offers premium transportation services across Tanzania. With years of experience, we specialize in comfortable airport transfers, tailored safaris, and executive travel.</p>
-    <p>Our mission is to provide safe and reliable mobility solutions while maintaining global standards of service.</p>
+    <p class="mb-4">King Safari &amp; Car Hire offers premium transportation services across Tanzania. With over a decade of experience, we pride ourselves on providing immaculate vehicles and knowledgeable local guides.</p>
+    <p class="mb-4">Our mission is to deliver safe and reliable mobility solutions while maintaining global standards of service. Whether you need an airport pickup or a week-long safari, our team ensures every trip is hassle-free.</p>
+    <ul class="list-disc pl-6 space-y-2 mb-4">
+      <li>Professional drivers and multilingual guides</li>
+      <li>Well-maintained fleet for all group sizes</li>
+      <li>Customizable itineraries and tour packages</li>
+    </ul>
+    <p>We operate from Arusha but serve clients across Kilimanjaro, Moshi, and Dar es Salaam.</p>
   </div>
 </main>
 <footer class="bg-gray-900 text-gray-300 py-6 text-center">
-  <p>&copy; 2025 King Safari &amp; Car Hire</p>
+  <p>&copy; <span id="year"></span> King Safari &amp; Car Hire</p>
 </footer>
-<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank">💬</a>
+<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

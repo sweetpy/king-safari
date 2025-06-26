@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Explore photos from our recent safaris, vehicles and tours around Tanzania.">
   <link rel="icon" type="image/png" href="https://source.unsplash.com/32x32/?jeep">
   <style>
     body { font-family: 'Outfit', sans-serif; }
@@ -39,12 +40,17 @@
       <img src="https://source.unsplash.com/400x300/?travel" alt="Travel" class="w-full h-60 object-cover rounded">
       <img src="https://source.unsplash.com/400x300/?minibus" alt="Minibus" class="w-full h-60 object-cover rounded">
       <img src="https://source.unsplash.com/400x300/?sunset,safari" alt="Sunset" class="w-full h-60 object-cover rounded">
+      <img src="https://source.unsplash.com/400x300/?tanzania" alt="Tanzania" class="w-full h-60 object-cover rounded">
+      <img src="https://source.unsplash.com/400x300/?mount-kilimanjaro" alt="Kilimanjaro" class="w-full h-60 object-cover rounded">
     </div>
   </div>
 </main>
 <footer class="bg-gray-900 text-gray-300 py-6 text-center">
-  <p>&copy; 2025 King Safari &amp; Car Hire</p>
+  <p>&copy; <span id="year"></span> King Safari &amp; Car Hire</p>
 </footer>
-<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank">💬</a>
+<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

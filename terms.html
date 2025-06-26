@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Review the rental terms and conditions for booking vehicles with King Safari.">
   <link rel="icon" type="image/png" href="https://source.unsplash.com/32x32/?jeep">
   <style>
     body { font-family: 'Outfit', sans-serif; }
@@ -34,11 +35,15 @@
     <p class="mb-4">All rentals require a valid driver&rsquo;s license and passport copy. A deposit may be required prior to vehicle release.</p>
     <p class="mb-4">Vehicles must be returned with the same fuel level as provided. Late returns may incur extra charges.</p>
     <p class="mb-4">Please contact us for full terms and conditions or any special requirements.</p>
+    <p class="mb-4">Prices are subject to change without prior notice. Insurance options are available on request.</p>
   </div>
 </main>
 <footer class="bg-gray-900 text-gray-300 py-6 text-center">
-  <p>&copy; 2025 King Safari &amp; Car Hire</p>
+  <p>&copy; <span id="year"></span> King Safari &amp; Car Hire</p>
 </footer>
-<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank">💬</a>
+<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

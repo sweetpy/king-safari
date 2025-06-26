@@ -23,7 +23,7 @@ This site provides a responsive landing page with sections for services, fleet o
 - `index.html` – Main landing page
 - `about.html` – Company background
 - `fleet.html` – Vehicle options
-- `gallery.html` – Photo showcase (placeholder)
+- `gallery.html` – Photo showcase
 - `contact.html` – Contact info
 - `terms.html` – Rental terms
 
@@ -32,12 +32,12 @@ This site provides a responsive landing page with sections for services, fleet o
 1. **Navigation** – Sticky top navbar with smooth scrolling.
 2. **Hero Section** – Fullscreen safari-themed background with call-to-action.
 3. **Floating WhatsApp Button** – Fixed bottom-right link to WhatsApp.
-4. **Instant Booking** – Basic form that opens WhatsApp with a pre-filled message.
+4. **Instant Booking** – Form with pickup, dropoff, vehicle and use-case selections that opens WhatsApp with a pre-filled message.
 5. **Services** – Grid layout describing common transport scenarios.
 6. **Fleet** – Cards for Toyota Alphard, Land Cruiser, and Coaster Minibus.
 7. **Testimonials** – User social proof quotes.
 8. **Contact Section** – Phone numbers and service locations.
-9. **Footer** – Copyright and tagline.
+9. **Footer** – Auto-updating year with tagline.
 10. **Mobile Optimized** – Responsive utility classes for smaller screens.
 
 ## SEO & Analytics

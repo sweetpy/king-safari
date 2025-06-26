@@ -61,6 +61,13 @@
         <option>Land Cruiser</option>
         <option>Coaster Minibus</option>
       </select>
+      <select class="border p-3 rounded" required>
+        <option selected disabled>Use Case</option>
+        <option>Airport Transfer</option>
+        <option>Safari Tour</option>
+        <option>City Ride</option>
+        <option>Business Trip</option>
+      </select>
       <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white py-3 rounded">Confirm via WhatsApp</button>
     </form>
   </div>
@@ -128,15 +135,15 @@
     <p class="text-center mb-6">Call us at <a href="tel:+255686120646" class="text-orange-600">+255 686 120 646</a></p>
     <p class="text-center mb-6">Available in Arusha, Moshi, Kilimanjaro & Dar es Salaam</p>
     <div class="text-center">
-      <a href="https://wa.me/255686120646" target="_blank" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded">Chat on WhatsApp</a>
+      <a href="https://wa.me/255686120646" target="_blank" rel="noopener" class="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded">Chat on WhatsApp</a>
     </div>
   </div>
 </section>
 <footer class="bg-gray-900 text-gray-300 py-6 text-center">
-  <p>&copy; 2025 King Safari &amp; Car Hire</p>
+  <p>&copy; <span id="year"></span> King Safari &amp; Car Hire</p>
   <p class="text-sm">Premium Mobility. Global Standards.</p>
 </footer>
-<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank">💬</a>
+<a href="https://wa.me/255686120646" class="floating-whatsapp" title="Chat with us" target="_blank" rel="noopener">💬</a>
 <script>
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -144,6 +151,7 @@
     const url = 'https://wa.me/255686120646?text=' + encodeURIComponent('Booking request: ' + data);
     window.open(url, '_blank');
   });
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
