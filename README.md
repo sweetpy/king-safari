@@ -16,7 +16,7 @@ This site provides a responsive landing page with sections for services, fleet o
 | Icons & Imagery   | Unicode, Unsplash             |
 | Chat Integration  | WhatsApp `wa.me` link         |
 | Analytics         | Google Analytics (GTag setup) |
-| Deployment Target | GitHub Pages                  |
+| Deployment Target | GitHub Pages, Flask backend   |
 Note: The pages load Tailwind via CDN for simplicity. In production, generate a static CSS file using `npx tailwindcss -o styles.css --minify` and link that instead.
 
 
@@ -41,6 +41,7 @@ Note: The pages load Tailwind via CDN for simplicity. In production, generate a 
 8. **Contact Section** – Phone numbers and service locations.
 9. **Footer** – Auto-updating year with tagline.
 10. **Mobile Optimized** – Responsive utility classes for smaller screens.
+11. **Admin Backend** – Flask app for asset uploads and reports.
 
 ## SEO & Analytics
 
@@ -55,6 +56,24 @@ Deploy to GitHub Pages:
 1. Push this repository to GitHub.
 2. In **Settings > Pages**, choose the `main` branch and root folder.
 3. Your site will be available at `https://<username>.github.io/king-safari/`.
+
+## Backend
+
+The `backend` directory contains a small Flask application for staff members.
+It includes a login page, asset uploader and simple reports.
+
+Run it locally with:
+
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
+
+Open `http://localhost:5000/login` in your browser and log in with
+`staff` / `pass123`.
+
+Uploaded images are saved to `backend/static/uploads`.
 
 ## To-Do
 
