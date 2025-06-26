@@ -60,7 +60,7 @@ Deploy to GitHub Pages:
 ## Backend
 
 The `backend` directory contains a small Flask application for staff members.
-It includes a login page, asset uploader and simple reports.
+It includes a login page, asset uploader, reports, and a basic log viewer.
 
 Run it locally with:
 
@@ -74,6 +74,9 @@ Open `http://localhost:5000/login` in your browser and log in with
 `staff` / `pass123`.
 
 Uploaded images are saved to `backend/static/uploads`.
+
+Application events are written to `backend/app.log` and can be viewed in the
+admin area under **Logs** at `http://localhost:5000/logs`.
 
 ## To-Do
 
