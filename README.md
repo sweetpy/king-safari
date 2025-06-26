@@ -79,6 +79,8 @@ ensure the Flask app is running locally when clicking it.
 
 Uploaded images are saved to `backend/static/uploads`.
 Image URLs added in the asset manager are stored in `backend/links.txt`.
+The file comes prepopulated with Unsplash links so the gallery works without
+uploading your own assets.
 
 Application events are written to `backend/app.log` and can be viewed in the
 admin area under **Logs** at `http://localhost:5000/logs`.
